@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!--this file is part Shamia-->
+    
+    <!--translation english-->
+    <system:String  x:Key="Listuser">list user(s)</system:String>
+    <system:String  x:Key="Connectazubu">connect azubu</system:String>
+    <system:String  x:Key="About">sobre</system:String>
+    <system:String  x:Key="Autoscroll">auto scroll</system:String>
+    <system:String  x:Key="TxtChatWater">type it ...</system:String>
+    <system:String x:Key="Mnuadjust">adjust</system:String>
+    <system:String x:Key="Channelconnect">waiting. . .</system:String>
+</ResourceDictionary>

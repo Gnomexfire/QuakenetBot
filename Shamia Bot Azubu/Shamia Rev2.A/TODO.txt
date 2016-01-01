@@ -1,0 +1,27 @@
+﻿GNU GENERAL PUBLIC LICENSE
+                       Version 3, 29 June 2007
+
+ Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
+ Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.
+
+Shamia bot azubu
+- bot para moderacao IRC chat azubu (http://quakenet.org) 
+- este projeto de codigo fonte aberto (USO NAO COMERCIAL) desenvolvido por
+- Rafael fernandes - rafaelfernandesmotta@gmail.com
+
+funcoes
+	banir usuario permanente
+	 ""     ""       dia(s)
+	 ""     ""		 hora(s)
+	(promover - remover)  usuario(s) moderador
+
+
+1.T
+- Multi-linguagem (BR-US-KO)
+
+
+-------------------------------
+(adcionar botao de doacao)
+(poder enviar rede sociais etc)
+()

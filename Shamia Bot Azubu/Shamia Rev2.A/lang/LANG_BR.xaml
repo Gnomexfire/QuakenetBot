@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!--this file is part Shamia-->
+    
+    <!--translation brazil-->
+    <system:String  x:Key="Listuser">lista de usuario(s)</system:String> 
+    <system:String  x:Key="Connectazubu">conectar azubu</system:String> 
+    <system:String  x:Key="About">sobre</system:String> 
+    <system:String  x:Key="Autoscroll">rolagem automatica</system:String> 
+    <system:String  x:Key="TxtChatWater">digite aqui ...</system:String> 
+    <system:String x:Key="Mnuadjust">ajustar</system:String> 
+    <system:String x:Key="Channelconnect">aguardando . . .</system:String> 
+    <system:String x:Key="Confchannel">canal</system:String>
+    <system:String x:Key="Chatkick">banir</system:String>
+    <system:String x:Key="Chattimeout">banir tempo</system:String>
+    <system:String x:Key="Chatkickday">banir dia(s)</system:String>
+    <system:String x:Key="Chatbanforever">banir permanente</system:String>
+    <system:String x:Key="Chatsetmoderator">promover moderador</system:String>
+    <system:String x:Key="Chatremovemoderator">remover moderador</system:String>
+</ResourceDictionary>
