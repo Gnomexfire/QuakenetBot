@@ -101,7 +101,7 @@ namespace Shamia_Rev2.A
 
         public void _gist()
         {
-            Webgist.Navigate(new Uri("https://gist.githubusercontent.com/Gnomexfire/06265e4c82e39f6ac8e3/raw/25b99f7d5c0ddcf186cc8cb037d74973e52271c1/shamia_tester", UriKind.Absolute));
+            Webgist.Navigate(new Uri("https://raw.githubusercontent.com/Gnomexfire/QuakenetBot/master/Shamia%20Bot%20Azubu/Shamia%20Rev2.A/shamia_test.txt", UriKind.Absolute));
             Webgist.LoadCompleted += Webgist_LoadCompleted;
         }
 
