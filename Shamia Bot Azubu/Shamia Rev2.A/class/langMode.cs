@@ -47,7 +47,7 @@ namespace Shamia_Rev2.A.Class
             }
             if (s == String.Empty) { return; }
             Elang = l;
-            ((MainWindow)Application.Current.MainWindow).Resources.MergedDictionaries.Clear();
+            //((MainWindow)Application.Current.MainWindow).Resources.MergedDictionaries.Clear();
 
             ResourceDictionary d = new ResourceDictionary()
             {

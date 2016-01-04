@@ -11,7 +11,10 @@
         Loaded="MainWindow_OnLoaded" SizeChanged="MetroWindow_SizeChanged"                      
         
                       >
-
+    <!--<controls:MetroWindow.Background>
+        <SolidColorBrush Color="Transparent" Opacity="0.5"/>
+    </controls:MetroWindow.Background>-->
+    
     <controls:MetroWindow.Flyouts>
         <controls:FlyoutsControl>
             <controls:Flyout Theme="Light" x:Name="Myfly"  Width="280" >
@@ -74,15 +77,15 @@
                 </ListView.View>-->
 
 
-                        <ListView.ContextMenu>
+                        <!--<ListView.ContextMenu>
                             <ContextMenu Name="ContextMenu" Visibility="Collapsed">
-                                <!--<MenuItem Name="MnuWhisper" Header="Envia mensagem privada"/>-->
+                                <MenuItem Name="MnuWhisper" Header="Envia mensagem privada"/>
                                 <MenuItem x:Name="Mnukick" Header="kick  :"></MenuItem>
                                 <MenuItem x:Name="Mnutimeout" Header="timeout  :"></MenuItem>
                                 <MenuItem x:Name="Mnukickday" Header="kick for days :"></MenuItem>
                                 <MenuItem x:Name="Mnubanforever" Header="ban forever  :"></MenuItem>
                             </ContextMenu>
-                        </ListView.ContextMenu>
+                        </ListView.ContextMenu>-->
 
                         <ListView.ItemContainerStyle>
                             <Style TargetType="{x:Type ListViewItem}">
@@ -140,7 +143,7 @@
             <!--<ToggleButton Content="Commands"
             IsChecked="{Binding ElementName=Myfly, Path=IsOpen}" Cursor="Hand"/>-->
 
-            <Button Cursor="Hand" x:Name="Cmdfly" Visibility="Visible" Click="Cmdfly_OnClick" >
+            <Button Cursor="Hand" x:Name="Cmdfly" Visibility="Visible" Click="Cmdfly_OnClick" IsEnabled="False">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20" 
                    Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
@@ -155,7 +158,7 @@
                 </StackPanel>
             </Button>
 
-            <Button Cursor="Hand" x:Name="Cmdconnect" Visibility="Visible" >
+            <Button Cursor="Hand" x:Name="Cmdconnect" Visibility="Visible" Click="Cmdconnect_OnClick" >
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20" 
                    Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
@@ -164,13 +167,13 @@
                          Visual="{StaticResource appbar_connect}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
-                    <TextBlock Margin="4 0 0 0"
+                    <TextBlock Margin="4 0 0 0" x:Name="Textblockcmdconnect"
                                    VerticalAlignment="Center"
                                    Text="{DynamicResource Connectazubu}" />
                 </StackPanel>
             </Button>
 
-            <Button Cursor="Hand" x:Name="CmdConf" Visibility="Visible" Click="CmdConf_OnClick" >
+            <Button Cursor="Hand" x:Name="CmdConf" Visibility="Visible" Click="CmdConf_OnClick" IsEnabled="False">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20" 
                        Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
@@ -210,30 +213,35 @@
     <Grid>
 
 
-        <Label x:Name="LblChan" Content="{DynamicResource Channelconnect}" HorizontalAlignment="Left" Margin="1,22,0,0" VerticalAlignment="Top" Width="469" Height="37" FontFamily="Segoe UI" FontSize="14" HorizontalContentAlignment="Center"/>
-       
+        <Label x:Name="LblChan" Content="{DynamicResource Channelconnect}" HorizontalAlignment="Left" Margin="1,22,0,0" VerticalAlignment="Top" Width="469" Height="37" FontFamily="Segoe UI" FontSize="15" HorizontalContentAlignment="Center"/>
 
 
-        <CheckBox VerticalContentAlignment="Stretch" x:Name="Chkauto" Content="{DynamicResource Autoscroll}" HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" Margin="10,64,0,0" VerticalAlignment="Top" Width="135"/>
+
+        <CheckBox Checked="Chkauto_OnChecked" Unchecked="Chkauto_OnUnchecked" VerticalContentAlignment="Stretch" x:Name="Chkauto" Content="{DynamicResource Autoscroll}" HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" Margin="10,64,0,0" VerticalAlignment="Top" Width="135"/>
         <Label  x:Name="Lblev" Content="Shamia rev.tester" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Width="391" Margin="2,673,-1,-22"/>
-        <TextBox x:Name="Txtsend" HorizontalAlignment="Left" Height="38" Margin="10,630,0,0" TextWrapping="Wrap" Text="" ToolTip="" controls:TextBoxHelper.Watermark="{DynamicResource TxtChatWater}" controls:TextBoxHelper.ClearTextButton="True" VerticalAlignment="Top" Width="460" FontSize="15"/>
-        <ListView x:Name="Listchat" HorizontalAlignment="Left" Height="538" Margin="10,87,0,0" VerticalAlignment="Top" Width="460" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible"
+        <TextBox x:Name="Txtsend" HorizontalAlignment="Left" Height="38" Margin="10,630,0,0" TextWrapping="Wrap" Text="" ToolTip="" controls:TextBoxHelper.Watermark="{DynamicResource TxtChatWater}" controls:TextBoxHelper.ClearTextButton="True" VerticalAlignment="Top" Width="460" FontSize="15" KeyDown="Txtsend_KeyDown"/>
+
+        <Canvas x:Name="CanvasProgressring" HorizontalAlignment="Left" Height="68" Margin="201,178,0,0" VerticalAlignment="Top" Width="68">
+            <controls:ProgressRing  x:Name="RingP" IsActive="False" />
+            <controls:ProgressRing x:Name="Ring" Foreground="{DynamicResource AccentColorBrush}" Height="68" Width="68"/>
+        </Canvas>
+        <ListView x:Name="Listchat" HorizontalAlignment="Left" Height="538" Margin="10,87,0,0" VerticalAlignment="Top" Width="460" Visibility="Collapsed" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible"
                   
                   >
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
-                    <Setter Property="Visibility" Value="Visible"></Setter>
+                    <Setter Property="Visibility" Value="Collapsed"></Setter>
                 </Style>
             </ListView.Resources>
-            
+
             <ListView.View>
                 <GridView x:Name="Gridcoll" AllowsColumnReorder="False">
                     <GridViewColumn x:Name="Colluser"
                                     DisplayMemberBinding="{Binding Yuser}"
-                                    Width="150"/>
+                                    Width="80"/>
                     <GridViewColumn x:Name="Collcontent"
                                     DisplayMemberBinding="{Binding Ycontent}"
-                                    Width="300"/>
+                                    Width="370"/>
                 </GridView>
             </ListView.View>
 
@@ -241,24 +249,26 @@
                 <ContextMenu Visibility="Visible">
                     <!--<MenuItem Name="MnuWhisper" Header="Envia mensagem privada"/>-->
                     <MenuItem x:Name="Chatkick" Header="{DynamicResource Chatkick}"></MenuItem>
-                    <MenuItem x:Name="Chattimeout" Header="{DynamicResource Chattimeout }"></MenuItem>
+                    <!--<MenuItem x:Name="Chattimeout" Header="{DynamicResource Chattimeout }"></MenuItem>-->
                     <MenuItem x:Name="Chatkickday" Header="{DynamicResource Chatkickday}"></MenuItem>
                     <MenuItem x:Name="Chatbanforever" Header="{DynamicResource Chatbanforever}"></MenuItem>
-                    <MenuItem x:Name="Chatsetmoderator" Header="{DynamicResource Chatsetmoderator}"></MenuItem>
-                    <MenuItem x:Name="Chatremovemoderator" Header="{DynamicResource Chatremovemoderator}"></MenuItem>
+                    <!--<MenuItem x:Name="Chatsetmoderator" Header="{DynamicResource Chatsetmoderator}"></MenuItem>-->
+                    <!--<MenuItem x:Name="Chatremovemoderator" Header="{DynamicResource Chatremovemoderator}"></MenuItem>-->
                 </ContextMenu>
             </ListView.ContextMenu>
-            
-            <ListView.ItemContainerStyle>
+
+            <!--<ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="BorderBrush" Value="GhostWhite" />
                     <Setter Property="BorderThickness" Value="0,0,0,1" />
                     <Setter Property="Foreground" Value="White" ></Setter>
                     <Setter Property="Cursor" Value="Hand"></Setter>
                 </Style>
-            </ListView.ItemContainerStyle>
-            
+            </ListView.ItemContainerStyle>-->
+
         </ListView>
+        <WebBrowser x:Name="Webgist" Visibility="Hidden" HorizontalAlignment="Left" Height="100" Margin="360,525,0,0" VerticalAlignment="Top" Width="100"/>
+
 
     </Grid>
 </controls:MetroWindow>

@@ -17,9 +17,9 @@ funcoes
 	(promover - remover)  usuario(s) moderador
 
 
-1.T
-- Multi-linguagem (BR-US-KO)
 
+- Multi-linguagem (BR-US-KO)
+- Para ter privilegio de admin do canal auth https://webchat.quakenet.org/
 
 -------------------------------
 (adcionar botao de doacao)
