@@ -308,14 +308,20 @@ namespace Shamia_Rev2.A
             // send simple message
             if (e.Key == Key.Enter && Txtsend.Text.Trim() != string.Empty != Txtsend.Text.StartsWith("/"))
             {
-                Core.SendToIrc(Txtsend.Text);
-                Txtsend.Text = string.Empty;
+                if (Txtsend.Text.Trim() != string.Empty)
+                {
+                    Core.SendToIrc(Txtsend.Text);
+                    Txtsend.Text = string.Empty;
+                }
             }
             // send command
             else if (e.Key == Key.Enter && Txtsend.Text.Trim() != string.Empty && Txtsend.Text.StartsWith("/"))
             {
-                Core.SendToIrc(Txtsend.Text,true);
-                Txtsend.Text = string.Empty;
+                if (Txtsend.Text.Trim() != string.Empty)
+                {
+                    Core.SendToIrc(Txtsend.Text, true);
+                    Txtsend.Text = string.Empty;
+                }
             }
 
 

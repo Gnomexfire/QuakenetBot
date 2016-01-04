@@ -396,7 +396,8 @@ namespace Shamia_Rev2.A.Class
         /// <param name="iscommand"></param>
         public void SendToIrc(string s,bool iscommand=false)
         {
-            //if(UThread == null) { return;}
+
+            if (UThread == null) { return; }
             //if (!UThread.IsAlive) { return;}
             string[] r = s.Split(new string[] {" ","/"}, StringSplitOptions.None);
 
