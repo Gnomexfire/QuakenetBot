@@ -110,6 +110,7 @@ namespace Shamia_Rev2.A
             // hide console
             Showconsole.ShowConsole(false);
         }
+         
 
         public void _gist()
         {
