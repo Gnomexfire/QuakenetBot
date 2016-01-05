@@ -8,7 +8,7 @@
         mc:Ignorable="d"
                                
         Height="700" BorderBrush="White" BorderThickness="1" Width="478" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ShowTitleBar="False"
-        Loaded="MainWindow_OnLoaded" SizeChanged="MetroWindow_SizeChanged"                      
+        Loaded="MainWindow_OnLoaded" SizeChanged="MetroWindow_SizeChanged" Icon="Icons-Land-Multiple-Smiley-Pirate-Smile.ico"                      
         
                       >
     <!--<controls:MetroWindow.Background>
@@ -219,13 +219,13 @@
 
         <CheckBox Checked="Chkauto_OnChecked" Unchecked="Chkauto_OnUnchecked" VerticalContentAlignment="Stretch" x:Name="Chkauto" Content="{DynamicResource Autoscroll}" HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" Margin="10,64,0,0" VerticalAlignment="Top" Width="135"/>
         <Label  x:Name="Lblev" Content="Shamia rev.tester" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Width="391" Margin="2,673,-1,-22"/>
-        <TextBox x:Name="Txtsend" HorizontalAlignment="Left" Height="38" Margin="10,630,0,0" TextWrapping="Wrap" Text="" ToolTip="" controls:TextBoxHelper.Watermark="{DynamicResource TxtChatWater}" controls:TextBoxHelper.ClearTextButton="True" VerticalAlignment="Top" Width="460" FontSize="15" KeyDown="Txtsend_KeyDown"/>
+        <TextBox x:Name="Txtsend" HorizontalAlignment="Left" Height="38" Margin="10,630,0,0" TextWrapping="Wrap" Text="" ToolTip="{DynamicResource TxtChatWater}" controls:TextBoxHelper.Watermark="{DynamicResource TxtChatWater}" controls:TextBoxHelper.ClearTextButton="True" VerticalAlignment="Top" Width="460" FontSize="15" KeyDown="Txtsend_KeyDown"/>
 
         <Canvas x:Name="CanvasProgressring" HorizontalAlignment="Left" Height="68" Margin="201,178,0,0" VerticalAlignment="Top" Width="68">
             <controls:ProgressRing  x:Name="RingP" IsActive="False" />
             <controls:ProgressRing x:Name="Ring" Foreground="{DynamicResource AccentColorBrush}" Height="68" Width="68"/>
         </Canvas>
-        <ListView x:Name="Listchat" HorizontalAlignment="Left" Height="538" Margin="10,87,0,0" VerticalAlignment="Top" Width="460" Visibility="Collapsed" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible"
+        <ListView x:Name="Listchat" HorizontalAlignment="Left" Height="538" Margin="10,87,0,0" VerticalAlignment="Top" Width="460" Visibility="Collapsed" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"
                   
                   >
             <ListView.Resources>
@@ -236,35 +236,40 @@
 
             <ListView.View>
                 <GridView x:Name="Gridcoll" AllowsColumnReorder="False">
-                    <GridViewColumn x:Name="Colluser"
+                    <GridViewColumn x:Name="Colluser" 
                                     DisplayMemberBinding="{Binding Yuser}"
                                     Width="80"/>
                     <GridViewColumn x:Name="Collcontent"
                                     DisplayMemberBinding="{Binding Ycontent}"
                                     Width="370"/>
+                    <!--370-->
                 </GridView>
             </ListView.View>
 
             <ListView.ContextMenu>
                 <ContextMenu Visibility="Visible">
                     <!--<MenuItem Name="MnuWhisper" Header="Envia mensagem privada"/>-->
-                    <MenuItem x:Name="Chatkick" Header="{DynamicResource Chatkick}"></MenuItem>
+                    <MenuItem x:Name="Chatkick" Header="{DynamicResource Chatkick}" Click="Chatkick_OnClick"></MenuItem>
                     <!--<MenuItem x:Name="Chattimeout" Header="{DynamicResource Chattimeout }"></MenuItem>-->
-                    <MenuItem x:Name="Chatkickday" Header="{DynamicResource Chatkickday}"></MenuItem>
-                    <MenuItem x:Name="Chatbanforever" Header="{DynamicResource Chatbanforever}"></MenuItem>
+                    <!--<MenuItem x:Name="Chatkickday" Header="{DynamicResource Chatkickday}"></MenuItem>-->
+                    <MenuItem x:Name="Chatbanforever" Header="{DynamicResource Chatbanforever}" Visibility="Collapsed"></MenuItem>
                     <!--<MenuItem x:Name="Chatsetmoderator" Header="{DynamicResource Chatsetmoderator}"></MenuItem>-->
                     <!--<MenuItem x:Name="Chatremovemoderator" Header="{DynamicResource Chatremovemoderator}"></MenuItem>-->
+                    <MenuItem x:Name="Chataddautokick" Header="{DynamicResource Chataddautokick}" Click="Chataddautokick_OnClick"></MenuItem>
+
+
                 </ContextMenu>
             </ListView.ContextMenu>
 
-            <!--<ListView.ItemContainerStyle>
+            <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="BorderBrush" Value="GhostWhite" />
+                    <!--<Setter Property="BorderBrush" Value="GhostWhite" />
                     <Setter Property="BorderThickness" Value="0,0,0,1" />
-                    <Setter Property="Foreground" Value="White" ></Setter>
+                    <Setter Property="Foreground" Value="White" ></Setter>-->
+                    <Setter Property="Padding" Value="0,0,0,5"></Setter>
                     <Setter Property="Cursor" Value="Hand"></Setter>
                 </Style>
-            </ListView.ItemContainerStyle>-->
+            </ListView.ItemContainerStyle>
 
         </ListView>
         <WebBrowser x:Name="Webgist" Visibility="Hidden" HorizontalAlignment="Left" Height="100" Margin="360,525,0,0" VerticalAlignment="Top" Width="100"/>

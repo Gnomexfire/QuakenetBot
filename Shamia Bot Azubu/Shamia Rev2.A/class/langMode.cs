@@ -14,7 +14,7 @@ namespace Shamia_Rev2.A.Class
         {
             Portuguese,
             English,
-            Chinese,
+            //Chinese,
             Korean
         }
         /// <summary>
@@ -38,9 +38,9 @@ namespace Shamia_Rev2.A.Class
                 case Lang.English:
                     s = "..\\Lang\\LANG_EN.xaml";
                     break;
-                case Lang.Chinese:
-                    s = "..\\Lang\\LANG_CH.xaml";
-                    break;
+                //case Lang.Chinese:
+                //    s = "..\\Lang\\LANG_CH.xaml";
+                //    break;
                 case Lang.Korean:
                     s = "..\\Lang\\LANG_KO.xaml";
                     break;
@@ -71,9 +71,9 @@ namespace Shamia_Rev2.A.Class
                 case Lang.English:
                     s = "..\\Lang\\LANG_EN.xaml";
                     break;
-                case Lang.Chinese:
-                    s = "..\\Lang\\LANG_CH.xaml";
-                    break;
+                //case Lang.Chinese:
+                //    s = "..\\Lang\\LANG_CH.xaml";
+                //    break;
                 case Lang.Korean:
                     s = "..\\Lang\\LANG_KO.xaml";
                     break;

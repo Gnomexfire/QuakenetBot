@@ -18,7 +18,6 @@
     <system:String x:Key="Chatbanforever">banir permanente</system:String>
     <system:String x:Key="Chatsetmoderator">promover moderador</system:String>
     <system:String x:Key="Chatremovemoderator">remover moderador</system:String>
-
     <system:String x:Key="Shamialetstart">Shamia , vamos começar ?</system:String>
     <system:String x:Key="Welcomechat">Bem vindo ao canal</system:String>
     <system:String x:Key="AuthSslEnable">Auth Ssl ativado</system:String>
@@ -26,4 +25,5 @@
     <system:String x:Key="Disconnectazubu">Desconectar</system:String>
     <system:String x:Key="Authsucess">Auth sucesso</system:String>
     <system:String x:Key="Enabledtransparence">Transparente</system:String>
+    <system:String x:Key="Chataddautokick">adcionar lista autokick</system:String>
 </ResourceDictionary>

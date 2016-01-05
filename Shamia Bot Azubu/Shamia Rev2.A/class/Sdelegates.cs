@@ -78,6 +78,14 @@ namespace Shamia_Rev2.A.Class
         public static event UpdateStatus OnUpdateStatus;
 #pragma warning restore 67
 
+        public delegate void CheckFloodMax();
+#pragma warning disable 67
+        public static event CheckFloodMax Flood;
+#pragma warning restore 67
+
+        public delegate void AutoKickTemp(string user);
+
+        public static event AutoKickTemp AutoKick;
         #endregion
 
 
@@ -114,11 +122,38 @@ namespace Shamia_Rev2.A.Class
             Application.Current.Dispatcher.Invoke(
                 DispatcherPriority.Normal, (Action) delegate
                 {
+                    List<string> unicodes = new List<string>()
+                    {
+                        "\u00030\u0003",
+                        "\u00031\u0003",
+                        "\u00032\u0003",
+                        "\u00033\u0003",
+                        "\u00034\u0003",
+                        "\u00035\u0003",
+                        "\u00036\u0003",
+                        "\u00036\u0003",
+                        "\u00038\u0003",
+                        "\u00039\u0003",
+
+                    };
+
+                    if (content.Length > 60)
+                    {
+                        int l = content.Length / 2;
+                        content = content.Substring(0, l) + Environment.NewLine +
+                                content.Substring(l, content.Length - l);
+                    }
+
+                    string[] c = content.Split(new string[] { "\u0003" }, StringSplitOptions.None);
+                    content = c[0];
+
                     ((MainWindow) Application.Current.MainWindow).Listchat.Items.Add(new TemplateUichat()
                     {
                         Yuser = whosent,
                         Ycontent = content
                     });
+
+                    
 
                     if (((MainWindow) Application.Current.MainWindow).Chkauto != null &&
                         ((MainWindow) Application.Current.MainWindow).Chkauto.IsChecked.Value)
@@ -127,6 +162,11 @@ namespace Shamia_Rev2.A.Class
                             ((MainWindow)Application.Current.MainWindow).Listchat.Items[((MainWindow)Application.Current.MainWindow).Listchat.Items.Count -1]
                             );
                     }
+
+                    // check massive flood
+                    OnFlood(whosent);
+
+
                 });
         }
 
@@ -149,6 +189,58 @@ namespace Shamia_Rev2.A.Class
 
                     ((MainWindow) Application.Current.MainWindow).Title =
                         ((MainWindow) Application.Current.MainWindow).LblChan.Content.ToString();
+                });
+        }
+
+        /// <summary>
+        /// massive flood
+        /// </summary>
+        /// <param name="user">user nick</param>
+        private static void OnFlood(string user)
+        {
+            Application.Current.Dispatcher.Invoke(
+                DispatcherPriority.Normal, (Action) delegate
+                {
+                    var total = ((MainWindow) Application.Current.MainWindow).Listchat.Items.Count ;
+                    if(total < MainWindow.Core.Conf.MaxFlood) { return;}
+                    int message = 0;
+                    for (int i = 0; i < MainWindow.Core.Conf.MaxFlood; i++) // check the last 3 message
+                    {
+                        var obj = ((MainWindow) Application.Current.MainWindow).Listchat.Items[total -1] as TemplateUichat ?? new TemplateUichat();
+                        if (obj.Yuser == user && obj.Yuser != MainWindow.Core.Conf.Owner) // comparation my user :) no kick shamia bot
+                        {
+                            message++;
+                        }
+                        total--;
+                    }
+                    if (message == MainWindow.Core.Conf.MaxFlood) 
+                    {
+                        // user flooder
+                        Console.WriteLine(user.Replace(":", string.Empty) + @" flood");
+                        // send kick command to irc to user flood
+                        MainWindow.Core.SendToIrc(@"/KICK " + user.Replace(":",string.Empty) + " flood",true);
+
+                        // add message chat list
+                        Console.WriteLine(user.Replace(":",string.Empty) + @" kicked flood");
+                        Sdelegates.OnChatCallback(@"system: ",
+                                                  user.Replace(":", string.Empty) + @" kicked flood");
+                    }
+                });
+        }
+        /// <summary>
+        /// tempore list user auto kick BANTIME
+        /// </summary>
+        public static void OnAutoKick(string user)
+        {
+            Application.Current.Dispatcher.Invoke(
+                DispatcherPriority.Normal, (Action) delegate
+                {
+                    if (SBanlist.UserInList(user))
+                    {
+                        // kick
+                        // send kick commando to Irc
+                        MainWindow.Core.SendToIrc(@"/KICK " + user.Replace(":",string.Empty) + " autokick",true);
+                    }
                 });
         }
     }

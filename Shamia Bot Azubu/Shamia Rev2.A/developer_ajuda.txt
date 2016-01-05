@@ -1,14 +1,48 @@
-﻿GNU GENERAL PUBLIC LICENSE
-                       Version 3, 29 June 2007
+OPER rafael-mottarp mFuIy58sW1
 
- Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
- Everyone is permitted to copy and distribute verbatim copies
- of this license document, but changing it is not allowed.
+MODE rafael-mottarp +x
 
-Shamia bot azubu
-- bot para moderacao IRC chat azubu (http://quakenet.org) 
-- este projeto de codigo fonte aberto (USO NAO COMERCIAL) desenvolvido por
-- Rafael fernandes - rafaelfernandesmotta@gmail.com
+#azubu.axt.br
+
+KICK #azubu.rafael-mottarp.br testelouco 0
+
+#azubu.rafael_mottarp
+#azubu.rafael-mottarp.br
+
+PRIVMSG #azubu.rafael_mottarp dsdasda
+
+fazer controles do form aumentar no resize
+id do chat conectado
+caixa de texto escrever mensagem
+list user(s) - contar total de usuario(s) online
+
+-multi-language
+lista de usuarios
+conectar azubu
+sobre
+rolagem automatica
+digite aqui ...
+
+
+":teste!webchat@177.82.120.177 JOIN #azubu.rafael_mottarp"
+#azubu.rafael_mottarp
+mFuIy58sW1
+":servercentral.il.us.quakenet.org 005 rafael-mottarp WHOX WALLCHOPS WALLVOICES USERIP CPRIVMSG CNOTICE SILENCE=15 MODES=6 MAXCHANNELS=20 MAXBANS=45 NICKLEN=15 :are supported by this server"
+
+/AUTH #azubu.rafael_mottarp rafael-mottarp mFuIy58sW1
+/AUTH rafael-mottarp mFuIy58sW1
+	
+KICK #azubu.rafael_mottarp @teste 0
+KICK #azubu.rafael_mottarp banme sorry
+KICK #azubu.rafael_mottarp banme 0
+
+
+
++C +i  +r +R +s +S +w
+https://auth.quakenet.org/webchat_ssl
+
+/MODE #azubu.rafael_mottarp.en +b rafaelfernandes!*@*
+
 
 TODO
 Shamia commandos client
@@ -56,7 +90,6 @@ ex:
 lista completa comandos canal	
 https://en.wikipedia.org/wiki/List_of_Internet_Relay_Chat_commands
 ----------------------------------------------------------------------
-	
 
 configurando Shamia
 arquivo => conf.json
@@ -74,14 +107,14 @@ Langflag      => idioma PT EN KO
 ex:
 	{
   "Port": "6667",                               "d_comment": "default port Irc 6667",
-  "Nick": "login",                              "n_comment": "nick is receive by email quakenet",
+  "Nick": "rafael-mottarp",                     "n_comment": "nick is receive by email quakenet",
   "Owner": "Shamia",                            "o_comment": "owner is nick used chat",
   "Server": "servercentral.il.us.quakenet.org", "s_comment": "server to connect IRC check server available https://www.quakenet.org/servers",
-  "Chan": "#azubu.chan.en",                     "c_comment": "channel to connect irc example #azubu.teste_azubu",
+  "Chan": "#azubu.rafael_mottarp.en",           "c_comment": "channel to connect irc example #azubu.teste_azubu",
   "AuthSsl": "0",                               "a_commment": "if 1 use authssl for moderate chat or [0 - write read chat]",
-  "Pwssl": "0",                                 "p_comment": "password receive by email quakenet",
+  "Pwssl": "mFuIy58sW1",                        "p_comment": "password receive by email quakenet",
   "loginnickname": "0",                         "l_comment": "object element input webauth login",
   "maxflood": "3",                              "m_comment": "max message send consecutive",
   "Langflag": "PT",                             "la_comment": "set flag language PT EN KO"
 	}		
-																
+								

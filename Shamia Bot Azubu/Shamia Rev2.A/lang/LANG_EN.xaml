@@ -4,11 +4,26 @@
     <!--this file is part Shamia-->
     
     <!--translation english-->
-    <system:String  x:Key="Listuser">list user(s)</system:String>
+    <system:String  x:Key="Listuser">user list</system:String>
     <system:String  x:Key="Connectazubu">connect azubu</system:String>
-    <system:String  x:Key="About">sobre</system:String>
+    <system:String  x:Key="About">about</system:String>
     <system:String  x:Key="Autoscroll">auto scroll</system:String>
-    <system:String  x:Key="TxtChatWater">type it ...</system:String>
+    <system:String  x:Key="TxtChatWater">type here ...</system:String>
     <system:String x:Key="Mnuadjust">adjust</system:String>
-    <system:String x:Key="Channelconnect">waiting. . .</system:String>
+    <system:String x:Key="Channelconnect">waiting . . .</system:String>
+    <system:String x:Key="Confchannel">channel</system:String>
+    <system:String x:Key="Chatkick">kick</system:String>
+    <system:String x:Key="Chattimeout">ban time</system:String>
+    <system:String x:Key="Chatkickday">ban day(s)</system:String>
+    <system:String x:Key="Chatbanforever">ban permanent</system:String>
+    <system:String x:Key="Chatsetmoderator">promote moderator</system:String>
+    <system:String x:Key="Chatremovemoderator">remove moderator</system:String>
+    <system:String x:Key="Shamialetstart">Shamia , come on?</system:String>
+    <system:String x:Key="Welcomechat">Welcome channel</system:String>
+    <system:String x:Key="AuthSslEnable">Auth Ssl enabled</system:String>
+    <system:String x:Key="AuthSslDisable">Auth Ssl disabled</system:String>
+    <system:String x:Key="Disconnectazubu">Disconnect</system:String>
+    <system:String x:Key="Authsucess">Auth success</system:String>
+    <system:String x:Key="Enabledtransparence">transparent</system:String>
+    <system:String x:Key="Chataddautokick">add AutoKick list</system:String>
 </ResourceDictionary>

@@ -29,5 +29,11 @@ namespace Shamia_Rev2.A.Class
             }
             ShowWindow(handle, SwHide);
         }
+
+        public static bool ConsoleIsShow()
+        {
+            var handle = GetConsoleWindow();
+            return handle != IntPtr.Zero;
+        }
     }
 }

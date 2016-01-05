@@ -30,6 +30,7 @@ namespace Shamia_Rev2.A
     public partial class MainWindow : MetroWindow
     {
         #region declare
+
         public static Score Core = new Score();
         
         /// <summary>
@@ -69,9 +70,20 @@ namespace Shamia_Rev2.A
 
             // set ShamiaIsAlive false
             ShamiaIsAlive = false;
-
+            Core.ScoreLoad();
             // set default language US
-            LangMode.SetLang(LangMode.Lang.Portuguese);
+            switch (Core.Conf.Langflag)
+            {
+                case @"PT":
+                    LangMode.SetLang(LangMode.Lang.Portuguese);
+                    break;
+                case @"EN":
+                    LangMode.SetLang(LangMode.Lang.English);
+                    break;
+                case @"KO":
+                    LangMode.SetLang(LangMode.Lang.Korean);
+                    break;
+            }
 
             // example add chat content
             //Listchat.Items.Add(new TemplateUichat
@@ -195,7 +207,7 @@ namespace Shamia_Rev2.A
 
         private void Cmdabout_OnClick(object sender, RoutedEventArgs e)
         {
-
+            Process.Start(@"https://goo.gl/obWDZC");
         }
 
         private void Cmdconnect_OnClick(object sender, RoutedEventArgs e)
@@ -345,6 +357,32 @@ namespace Shamia_Rev2.A
 
         }
 
-       
+        /// <summary>
+        /// send command kick user 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Chatkick_OnClick(object sender, RoutedEventArgs e)
+        {
+            if(Listchat.SelectedItem == null) { return;}
+            var c = Listchat.SelectedItem as TemplateUichat ?? new TemplateUichat();
+
+            // send command kick
+            Core.SendToIrc(@"/KICK " + c.Yuser.Replace(":",string.Empty) + " kicked",true);
+
+        }
+
+        /// <summary>
+        /// send user to list autokicke
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Chataddautokick_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (Listchat.SelectedItem == null) { return; }
+            var c = Listchat.SelectedItem as TemplateUichat ?? new TemplateUichat();
+            // user in banlist tempore
+            Core.SendToIrc(@"/BANTIME " + c.Yuser.Replace(":",string.Empty),true);
+        }
     }
 }

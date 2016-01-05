@@ -83,6 +83,15 @@ namespace Shamia_Rev2.A.Class
             /// object element webauth
             /// </summary>
             public string Loginnickname { get; set; }
+
+            /// <summary>
+            /// consecutive message send(s) prevent flood
+            /// </summary>
+            public int MaxFlood { get; set; }
+            /// <summary>
+            /// flag language PT US KO
+            /// </summary>
+            public string Langflag { get; set; }
         }
         /// <summary>
         /// constructor class
@@ -103,6 +112,7 @@ namespace Shamia_Rev2.A.Class
             Conf.AuthSsl = conf.AuthSsl; // if 1 auth ssl
             Conf.Pwssl = conf.Pwssl; // password used ssl
             Conf.Loginnickname = conf.Loginnickname ; // object element login auth
+            Conf.MaxFlood = conf.MaxFlood; // set maxime consecutive message user send chat default 3 
 
             Console.Clear();
             Console.WriteLine(@"port :" + Conf.Port + Environment.NewLine +
@@ -113,6 +123,34 @@ namespace Shamia_Rev2.A.Class
                               @"use ssl :" + Conf.AuthSsl + Environment.NewLine +
                               @"success load config.json");
         }
+
+        public void ScoreLoad()
+        {
+            // example json load config file 
+            string json = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory +
+                                           "\\conf.json");
+            TemplateSconf conf = new JavaScriptSerializer().Deserialize<TemplateSconf>(json);
+
+            Conf.Port = conf.Port; // set port json file => struct
+            Conf.Nick = conf.Nick; // set nick  json file => struct
+            Conf.Owner = conf.Owner; // set owner json file => struct
+            Conf.Server = conf.Server; // set server json file => struct
+            Conf.Chan = conf.Chan; // set channel json file => struct
+            Conf.AuthSsl = conf.AuthSsl; // if 1 auth ssl
+            Conf.Pwssl = conf.Pwssl; // password used ssl
+            Conf.Loginnickname = conf.Loginnickname; // object element login auth
+            Conf.MaxFlood = conf.MaxFlood; // set maxime consecutive message user send chat default 3 
+            Conf.Langflag = conf.Langflag; // set lang flag
+            Console.Clear();
+            Console.WriteLine(@"port :" + Conf.Port + Environment.NewLine +
+                              @"nick :" + Conf.Nick + Environment.NewLine +
+                              @"owner :" + Conf.Owner + Environment.NewLine +
+                              @"server :" + Conf.Server + Environment.NewLine +
+                              @"channel :" + Conf.Chan + Environment.NewLine +
+                              @"use ssl :" + Conf.AuthSsl + Environment.NewLine +
+                              @"success load config.json");
+        }
+
 
         /// <summary>
         /// this method step 1 connect to server and channel
@@ -188,7 +226,7 @@ namespace Shamia_Rev2.A.Class
                 // step 1
                 _output.Write(
                     "USER " + Conf.Nick + " 0 * :" + Conf.Owner + "\r\n" +
-                    "NICK " + Conf.Nick + "\r\n");
+                    "NICK " + Conf.Owner + "\r\n");
                 _output.Flush();
 
                 // step 2
@@ -196,7 +234,7 @@ namespace Shamia_Rev2.A.Class
                 {
                     Console.WriteLine(@"AuthSsl: true");
                     // auth ssl add privileged for user moderate channel
-                    LoginSsl(Conf.Owner, Conf.Pwssl);
+                    LoginSsl(Conf.Nick, Conf.Pwssl);
 
                     Application.Current.Dispatcher.Invoke(
                         DispatcherPriority.Normal, (Action) delegate
@@ -310,11 +348,14 @@ namespace Shamia_Rev2.A.Class
                     */
                     if(s != null)
                     Console.WriteLine(s);
-
+                    
                     // check Part or Join
                     if (s.Contains("PART") || s.Contains("JOIN"))
                     {
                         string[] part = s.Split(new string[] {":", "!"}, StringSplitOptions.None); // nick user
+
+                        // auto kick check list contains user
+                        Sdelegates.OnAutoKick(part[1]);
 
                         // leave channel
                         if (s.Contains("PART"))
@@ -327,6 +368,8 @@ namespace Shamia_Rev2.A.Class
                         {
                             Sdelegates.OnPartJoinCall(Sdelegates.ParJon.Enter,
                                 part[1]);
+
+                            
                         }
 
                     }
@@ -369,7 +412,7 @@ namespace Shamia_Rev2.A.Class
                     else if (s.Contains("CPRIVMSG"))
                     {
                         /*
-                        ":servercentral.il.us.quakenet.org 005 rafael-mottarp WHOX WALLCHOPS WALLVOICES USERIP CPRIVMSG CNOTICE SILENCE=15 MODES=6 MAXCHANNELS=20 MAXBANS=45 NICKLEN=15 :are supported by this server"
+                        ":servercentral.il.us.quakenet.org 005 teste WHOX WALLCHOPS WALLVOICES USERIP CPRIVMSG CNOTICE SILENCE=15 MODES=6 MAXCHANNELS=20 MAXBANS=45 NICKLEN=15 :are supported by this server"
                         */
                         string[] chan = s.Split(new string[] {" "}, StringSplitOptions.None);
                         //Console.WriteLine(chan[1]); Application.Current.MainWindow.Resources.MergedDictionaries[0]["Welcomechat"].ToString()
@@ -404,12 +447,13 @@ namespace Shamia_Rev2.A.Class
             _output = new StreamWriter(Ssock.GetStream());
 
 
-            
 
-
+            try
+            {
             // send command
             if (iscommand)
             {
+                // auth privilege
                 if (r[1] == "AUTH")
                 {
                     string[] content = s.Split(new string[] {" ", "/"}, StringSplitOptions.None);
@@ -420,6 +464,7 @@ namespace Shamia_Rev2.A.Class
                     Sdelegates.OnChatCallback(@"system :",
                         Application.Current.MainWindow.Resources.MergedDictionaries[0]["Authsucess"].ToString());
                 }
+                // kick user
                 else if (r[1] == "KICK")
                 {
                     // command kick ex :
@@ -428,6 +473,72 @@ namespace Shamia_Rev2.A.Class
                     _output.Write(@"KICK " + MainWindow.Core.Conf.Chan + " " + k[2] + " " + k[3] + "\r\n");
                     _output.Flush();
                 }
+                
+                else if (r[1] == "BANTIME")
+                {
+                    // created simple list auto kick user if join channel if banned for TIMEOUT
+                    SBanlist.AddBanList(r[2]);
+                        // add command to send in listviewchat
+                        Sdelegates.OnChatCallback(@"system: ",
+                                                  @"BANTIME => " + r[2]);
+                        // kick user
+                        // auto kick check list contains user
+                        Sdelegates.OnAutoKick(r[2]);
+                    }
+                else if (r[1] == "UNBANTIME")
+                {
+                    SBanlist.RemoveBanList(r[2]);
+                        // add command to send in listviewchat
+                        Sdelegates.OnChatCallback(@"system: ",
+                                                  @"UNBANTIME => " + r[2]);
+                }
+                else if (r[1] == "CLEARBANTIME")
+                {
+                    SBanlist.ClearList();
+                        // add command to send in listviewchat
+                        Sdelegates.OnChatCallback(@"system: ",
+                                                  @"CLEARBANTIME => CLEAN");
+                    }
+                else if (r[1] == "BANDAYS")
+                {
+                    
+                }
+                // clear server channel chat
+                else if (r[1] == "CLEAR")
+                {
+                    Application.Current.Dispatcher.Invoke(
+                        DispatcherPriority.Normal, (Action) delegate
+                        {
+                            ((MainWindow)Application.Current.MainWindow).Listchat.Items.Clear();
+                            Sdelegates.OnChatCallback(@"system: ",
+                                                      @"clean client chat");
+                        });
+                }
+                // send pure command to server
+                else if (r[1] == "CMD")
+                {
+                    // send pure command 
+                     _output.Write(s.Replace("/CMD", string.Empty) + "\r\n");
+                     _output.Flush();
+                }
+                // Q PERMBAN <#channel> <banmask> [<reason>]
+                else if (r[1] == "BANFOREVER")
+                {
+                            
+                }
+                // show debug console
+                else if (r[1] == "DEBUG")
+                {
+                    if (Showconsole.ConsoleIsShow())
+                    {
+                        Showconsole.ShowConsole();
+                    }
+                    else
+                    {
+                        Showconsole.ShowConsole(false);
+                    }
+                }
+                // quit
                 else if (r[1] == "QUIT")
                 {
                     _output.Write(@"QUIT" + "\r\n");
@@ -435,12 +546,13 @@ namespace Shamia_Rev2.A.Class
                 }
 
 
-                // add command to send in listviewchat
-                //Sdelegates.OnChatCallback(MainWindow.Core.Conf.Nick,
-                //                          s);
-                //return;
-            }
-            else
+                    // add command to send in listviewchat
+                    //Sdelegates.OnChatCallback(MainWindow.Core.Conf.Nick,
+                    //                          r[1].ToString());
+                    Console.WriteLine(MainWindow.Core.Conf.Nick + @" " +r[1]);
+                    //return;
+                }
+                else
             {
                 //// send pure command 
                 //_output.Write(s + "\r\n");
@@ -452,12 +564,18 @@ namespace Shamia_Rev2.A.Class
                 _output.Write("PRIVMSG " + MainWindow.Core.Conf.Chan + " : " + s + "\r\n");
                 _output.Flush();
                 // add message to send in listviewchat
-                Sdelegates.OnChatCallback(MainWindow.Core.Conf.Nick,
+                Sdelegates.OnChatCallback(MainWindow.Core.Conf.Owner,
                                           s);
             }
-            
 
-            
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Sdelegates.OnChatCallback(@"error: ",
+                                          ex.HResult.ToString());
+            }
+
         }
     }
     /// <summary>
@@ -497,6 +615,15 @@ namespace Shamia_Rev2.A.Class
         /// object element auth login
         /// </summary>
         public string Loginnickname { get; set; }
+        /// <summary>
+        /// consecutive message send(s) prevent flood
+        /// </summary>
+        public int MaxFlood { get; set; }
+
+        /// <summary>
+        /// lang flag
+        /// </summary>
+        public string Langflag { get; set; }
     }
 
     /// <summary>
