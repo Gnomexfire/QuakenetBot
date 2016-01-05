@@ -189,9 +189,6 @@
     <Resource Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="shamia_test.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Chat.ico" />
   </ItemGroup>
   <ItemGroup>
